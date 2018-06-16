@@ -1,0 +1,19 @@
+from selenium import webdriver
+from selenium.webdriver.common.keys import Keys
+import time
+
+driver = webdriver.Chrome()
+driver.get('http://blog.csssr.ru/qa-engineer/')
+driver.maximize_window()
+driver.implicitly_wait(10)
+assert 'Квест ассистента менеджера' in driver.title
+# поиск заголовка "РАСПРЕДЕЛЕНИЕ ОБЯЗАННОСТЕЙ"
+elem = driver.find_element_by_xpath('/html/body/div[1]/section[1]/h1')
+# поиск элемента "НАХОДИТЬ НЕСОВЕРШЕНСТВА"
+elem_errors = driver.find_element_by_xpath('/html/body/div[1]/section[1]/section/div[2]/a')
+elem_errors.click()
+
+links = driver.find_elements_by_partial_link_text('Софт для быстрого создания скриншотов')
+assert links[0].get_attribute("href") == 'http://monosnap.com/'
+
+driver.close()
